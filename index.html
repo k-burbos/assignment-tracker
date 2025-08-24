@@ -1,0 +1,407 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker</title>
+</head>
+
+<body>
+    <h1>Tracker</h1>
+    <div class="input">
+        <label for="class">Which class is this for?</label>
+        <select name="class" id="class" style="color: grey;">
+            <option value="SelectClass" disabled selected style="color: grey; font-style: italic;">Select a class.
+            </option>
+            <option value="CSIT111" style="color: black;">CSIT111</option>
+            <option value="CSIT121" style="color: black;">CSIT121</option>
+            <option value="PHILO031" style="color: black;">PHILO031</option>
+            <option value="MATH031" style="color: black;">MATH031</option>
+            <option value="PSYCH031" style="color: black;">PSYCH031</option>
+            <option value="ENGL031" style="color: black;">ENGL031</option>
+            <option value="PE103" style="color: black;">PE103</option>
+            <option value="NSTP111" style="color: black;">NSTP111</option>
+        </select>
+
+        <br>
+        <label for="assignment">Information:</label>
+        <textarea name="assignment" placeholder="What is it?" id="assignment"></textarea>
+        <br>
+        <input type="date" id="date">
+        <br>
+        <button id="save">Save</button>
+    </div>
+
+    <div id="error"></div>
+
+</body>
+
+<br>
+
+<h2 class="area">New</h2>
+<div id="newAssignment"></div>
+<h2 class="area">In progress</h2>
+<div class="inProgress"></div>
+<h2 class="area">Completed</h2>
+<div class="completed"></div>
+
+
+<style>
+    #newAssignment {
+        background-color: grey;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: clamp(15em, 80vw, 80vw);
+        height: auto;
+        gap: 5px;
+        padding: 50px;
+        border-radius: 20px;
+    }
+
+    .inProgress {
+        background-color: grey;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: clamp(15em, 80vw, 80vw);
+        height: auto;
+        gap: 5px;
+        padding: 50px;
+        border-radius: 20px;
+    }
+
+    .area {
+        background-color: rgb(89, 82, 74);
+        height: 2em;
+        width: 20em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+    }
+
+    .completed {
+        background-color: grey;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: clamp(15em, 80vw, 80vw);
+        height: auto;
+        gap: 5px;
+        padding: 50px;
+        border-radius: 20px;
+    }
+
+    .task {
+        background-color: rgba(0, 0, 0, 0.46);
+        align-items: center;
+        padding: 10px;
+        border-radius: 20px;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-template-areas: 
+            "title title"
+            "line line"
+            "class2 classValue2"
+            "info2 infoValue"
+            "duedate rawdate"
+            "duedatevalue duedatevalue"
+            "status statusValue"
+            "delete delete";
+        row-gap: 0px;
+        text-align: center;
+    }
+
+    .title {
+        grid-area: title;
+        text-align: center;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 30px; 
+        transform: scale(2); 
+        letter-spacing: 4px;
+        transform-origin: center;
+        margin-bottom: 0;
+    }
+
+    .class2 { 
+        grid-area: class2;
+        background-color: rgba(221, 165, 216, 0.859);
+        height: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+    }
+    .classValue2 { 
+        grid-area: classValue2;
+        background-color: rgb(187, 126, 180);
+        height: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+    }
+    .info2 { 
+        grid-area: info2;
+        background-color: rgba(221, 165, 216, 0.859);
+        height: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+    }
+    .infoValue {
+        grid-area: infoValue;
+        background-color: rgb(187, 126, 180);
+        height: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+    }
+
+    .duedate { 
+        grid-area: duedate;
+        background-color: rgba(221, 165, 216, 0.859);
+        height: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;}
+    .rawdate { 
+        grid-area: rawdate;
+        background-color: rgb(187, 126, 180);
+        height: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+    }
+
+    .duedatevalue {
+        grid-area: duedatevalue;
+        background-color: rgb(24, 15, 23);
+        height: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+    }
+
+    .line {
+        grid-area: line;
+        background-color: white;
+        height: 1px;
+    }
+
+    .delete {
+        margin-top: 1em;
+        height: 3em;
+        width: 28em;
+        appearance: none;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        grid-area: delete;
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    h1 {
+        font-size: 150px;
+        text-align: center;
+        margin: 0;
+        margin-top: 55px;
+    }
+
+    #class {
+        height: 5em;
+        width: 20em;
+        appearance: none;
+        border-radius: 20px;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    #assignment {
+        width: 20em;
+        height: 20em;
+        resize: none;
+        padding: 10px;
+        border-radius: 20px;
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    #classValue {
+        color: white;
+    }
+
+    #date {
+        appearance: none;
+        height: 5em;
+        width: 20em;
+        border: none;
+        padding: 10px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    body {
+        background-color: #2f0937da;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        flex-direction: column;
+        width: 100vw;
+    }
+
+    #save {
+        appearance: none;
+        width: 20em;
+        height: 3em;
+        border: none;
+        padding: 10px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .input {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        gap: 3px;
+        height: 20em;
+        width: clamp(15em, 20vw, 40em);
+        padding: 20px;
+        margin-top: 20px;
+        background-color: rgb(86, 81, 81);
+        border-radius: 50px;
+        box-shadow: -8px 15px 8px rgba(0, 0, 0, 0.352);
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const savedButton = document.getElementById("save")
+        const newAssignment = document.getElementById("newAssignment")
+        const errormessage = document.getElementById("error")
+        const dateValue = document.getElementById('date')
+        const selectClass = document.getElementById('class')
+
+        selectClass.addEventListener("change", () => {
+            selectClass.style.color = "black";
+        })
+
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        function createTaskElement(task, index) {
+            const taskDiv = document.createElement("div");
+            taskDiv.className = "task";
+            taskDiv.setAttribute("data-index", index);
+
+            taskDiv.innerHTML = `
+                <h3 class="title"> task </h3>
+                <p class="line"> </p>
+                <p class="class2"> Class </p>
+                <p class="classValue2">${task.classValue}</p>
+                <p class="info2">Information</p>
+                <p class="infoValue">${task.info}</p>
+                <p class="duedate">Due date</p>
+                <p class="rawdate">${task.formattedDate}</p> 
+                <p class="duedatevalue">${task.daysLeftText}</p>
+                <label for="status" style="grid-area: status; background-color: rgba(221, 165, 216, 0.859); height: 2em; display: flex; align-items: center; justify-content: center; border-radius: 20px;">Status</label>
+                <select name="status" class="status" style="grid-area: statusValue; height:2.3em; width:19em; border-radius:20px; font-family: 'Times New Roman', Times, serif; padding: 6px;">
+                    <option value="Notstarted" ${task.status === "Notstarted" ? "selected" : ""}>Not started</option>
+                    <option value="InProgress" ${task.status === "InProgress" ? "selected" : ""}>In progress</option>
+                    <option value="Completed" ${task.status === "Completed" ? "selected" : ""}>Completed</option>
+                </select> <br>
+                <button class="delete">Delete</button>
+                `;
+
+            return taskDiv;
+        }
+
+        function render() {
+
+            newAssignment.innerHTML = "";
+            document.querySelector(".inProgress").innerHTML = "";
+            document.querySelector(".completed").innerHTML = "";
+
+            tasks.forEach((task, index) => {
+                const taskElement = createTaskElement(task, index);
+
+                if (task.status === "Completed") {
+                    document.querySelector(".completed").appendChild(taskElement);
+                } else if (task.status === "InProgress") {
+                    document.querySelector(".inProgress").appendChild(taskElement);
+                } else {
+                    newAssignment.appendChild(taskElement);
+                }
+            });
+
+            document.querySelectorAll(".delete").forEach(button => {
+                button.addEventListener("click", function () {
+                    const index = this.parentElement.getAttribute("data-index");
+                    tasks.splice(index, 1);
+                    localStorage.setItem('tasks', JSON.stringify(tasks));
+                    render();
+                });
+            });
+
+            document.querySelectorAll(".status").forEach(select => {
+                select.addEventListener("change", function () {
+                    const index = this.parentElement.getAttribute("data-index");
+                    tasks[index].status = this.value;
+                    localStorage.setItem('tasks', JSON.stringify(tasks));
+                    render();
+                });
+            });
+        }
+
+        render()
+
+        savedButton.addEventListener("click", () => {
+            const classValue = document.getElementById('class').value
+            const info = document.getElementById('assignment').value
+
+            const dateInput = document.getElementById('date').value
+            const rawDate = new Date(dateValue.value)
+            const formattedDate = rawDate.toLocaleDateString("en-GB")
+
+            const today = new Date();
+
+            const timeDiff = rawDate - today;
+            const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
+
+            let daysLeftText;
+
+            if (daysLeft < 0) {
+                daysLeftText = 'Deadline has passed.'
+            } else if (daysLeft == 0) {
+                daysLeftText = 'Due today.'
+            } else {
+                daysLeftText = `${daysLeft} day(s) left.`
+            }
+
+            const updateTask = {
+                classValue: classValue,
+                info: info,
+                formattedDate: formattedDate,
+                daysLeftText: daysLeftText,
+                status: "Notstarted"
+            };
+
+            errormessage.innerHTML = "";
+            if (!classValue || !dateInput) {
+                errormessage.innerHTML = "Please fill out all boxes."
+                return;
+            }
+
+            tasks.push(updateTask)
+            localStorage.setItem('tasks', JSON.stringify(tasks))
+            render()
+        })
+    })
+</script>
+
+</html>
