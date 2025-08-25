@@ -400,8 +400,18 @@
             tasks.push(updateTask)
             localStorage.setItem('tasks', JSON.stringify(tasks))
             render()
+            clear()
         })
-    })
+
+                function clear() {
+                const clearClass = document.getElementById('class').selectedIndex = 0
+                selectClass.style.color = "grey"
+                const clearInfo = document.getElementById('assignment').value = '';
+                const clearDate = document.getElementById('date').value = '';
+    }
+})
+
+    
 </script>
 
 </html>
